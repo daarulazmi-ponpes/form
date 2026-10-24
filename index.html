@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0877b9">
+  <meta name="description" content="Formulir pendaftaran santri baru Pondok Pesantren Daarul Azmi. Isi formulir dan kirim data melalui WhatsApp.">
+  <title>Formulir Santri Baru | Daarul Azmi</title>
+  <link rel="icon" href="assets/logo-daarul-azmi.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img src="assets/logo-daarul-azmi.png" alt="Logo Pondok Pesantren Daarul Azmi" class="brand-logo">
+      <div>
+        <p class="eyebrow">PONDOK PESANTREN</p>
+        <h1>Formulir Santri Baru</h1>
+        <p class="brand-subtitle">Daarul Azmi</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+    <section class="intro">
+      <span class="intro-icon" aria-hidden="true">✦</span>
+      <div>
+        <h2>Pendaftaran Santri Baru</h2>
+        <p>Silakan isi data dengan benar sesuai dokumen resmi. Setelah selesai, tekan tombol kirim untuk meneruskan formulir melalui WhatsApp.</p>
+        <p class="required-note"><span>*</span> Wajib diisi</p>
+      </div>
+    </section>
+
+    <form id="santriForm">
+      <section class="form-section">
+        <div class="section-heading"><span>01</span><div><h2>Identitas Peserta Didik</h2><p>Data pribadi dan informasi sekolah asal</p></div></div>
+        <div class="form-grid">
+          <label class="field"><span>Nama sesuai Kartu Keluarga <b>*</b></span><input name="nama_kk" required autocomplete="name"></label>
+          <label class="field"><span>Nama sesuai Akta Kelahiran</span><input name="nama_akta"></label>
+          <label class="field"><span>Nama sesuai Ijazah Terakhir</span><input name="nama_ijazah"></label>
+          <label class="field"><span>Jenis Kelamin <b>*</b></span><select name="jenis_kelamin" required><option value="">Pilih jenis kelamin</option><option>Laki-laki</option><option>Perempuan</option></select></label>
+          <label class="field"><span>NISN</span><input name="nisn" inputmode="numeric"></label>
+          <label class="field"><span>NIS</span><input name="nis" inputmode="numeric"></label>
+          <label class="field"><span>Nomor Seri Ijazah</span><input name="nomor_ijazah"></label>
+          <label class="field"><span>NIK</span><input name="nik" inputmode="numeric" maxlength="16"></label>
+          <label class="field"><span>Nomor Kartu Keluarga (KK)</span><input name="no_kk" inputmode="numeric" maxlength="16"></label>
+          <label class="field"><span>NPSN Sekolah Asal</span><input name="npsn"></label>
+          <label class="field"><span>Nama Sekolah Asal</span><input name="sekolah_asal"></label>
+          <label class="field"><span>Tempat Lahir</span><input name="tempat_lahir"></label>
+          <label class="field"><span>Tanggal Lahir</span><input name="tanggal_lahir" type="date"></label>
+          <label class="field"><span>Agama</span><select name="agama"><option value="">Pilih agama</option><option>Islam</option><option>Kristen</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option><option>Lainnya</option></select></label>
+          <label class="field"><span>No. Registrasi Akta Kelahiran</span><input name="registrasi_akta"></label>
+          <label class="field"><span>Berkebutuhan Khusus</span><input name="kebutuhan_khusus" placeholder="Jika ada, jelaskan"></label>
+          <label class="field"><span>Alat Transportasi ke Sekolah</span><select name="transportasi"><option value="">Pilih transportasi</option><option>Jalan kaki</option><option>Sepeda</option><option>Sepeda motor</option><option>Mobil pribadi</option><option>Angkutan umum</option><option>Diantar</option><option>Lainnya</option></select></label>
+          <label class="field"><span>Jenis Tinggal</span><input name="jenis_tinggal" placeholder="Contoh: bersama orang tua"></label>
+          <label class="field"><span>No. Telepon Rumah</span><input name="telepon_rumah" inputmode="tel"></label>
+          <label class="field"><span>No. HP</span><input name="hp_santri" inputmode="tel"></label>
+          <label class="field"><span>Email Pribadi</span><input name="email" type="email"></label>
+          <label class="field"><span>No. KKS</span><input name="no_kks"></label>
+          <label class="field"><span>Penerima KPS / PKH?</span><select name="penerima_kps_pkh"><option value="">Pilih jawaban</option><option>Ya</option><option>Tidak</option></select></label>
+          <label class="field"><span>No. KPS</span><input name="no_kps"></label>
+          <label class="field"><span>Usulan sekolah layak PIP</span><select name="usulan_pip"><option value="">Pilih jawaban</option><option>Ya</option><option>Tidak</option></select></label>
+          <label class="field"><span>Alasan layak PIP</span><input name="alasan_pip"></label>
+          <label class="field"><span>Penerima KIP?</span><select name="penerima_kip"><option value="">Pilih jawaban</option><option>Ya</option><option>Tidak</option></select></label>
+          <label class="field"><span>No. KIP</span><input name="no_kip"></label>
+          <label class="field"><span>Nama tertera di KIP</span><input name="nama_kip"></label>
+          <label class="field"><span>Alasan menolak KIP</span><input name="alasan_menolak_kip"></label>
+          <label class="field"><span>Lintang (opsional)</span><input name="lintang"></label>
+          <label class="field"><span>Bujur (opsional)</span><input name="bujur"></label>
+        </div>
+
+        <h3 class="subsection-title">Alamat Tempat Tinggal</h3>
+        <div class="form-grid">
+          <label class="field full"><span>Dusun / Jalan</span><input name="alamat_jalan" autocomplete="street-address"></label>
+          <label class="field"><span>RT</span><input name="rt" inputmode="numeric"></label>
+          <label class="field"><span>RW</span><input name="rw" inputmode="numeric"></label>
+          <label class="field"><span>Kelurahan / Desa</span><input name="desa"></label>
+          <label class="field"><span>Kode Pos</span><input name="kode_pos" inputmode="numeric" maxlength="5"></label>
+          <label class="field"><span>Kecamatan</span><input name="kecamatan"></label>
+          <label class="field"><span>Kabupaten / Kota</span><input name="kabupaten_kota"></label>
+          <label class="field full"><span>Provinsi</span><input name="provinsi"></label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <div class="section-heading"><span>02</span><div><h2>Data Ayah Kandung</h2><p>Lengkapi informasi ayah kandung</p></div></div>
+        <div class="form-grid">
+          <label class="field"><span>Nama Ayah <b>*</b></span><input name="nama_ayah" required></label>
+          <label class="field"><span>Tahun Lahir Ayah</span><input name="tahun_lahir_ayah" inputmode="numeric" maxlength="4" placeholder="YYYY"></label>
+          <label class="field"><span>NIK Ayah</span><input name="nik_ayah" inputmode="numeric" maxlength="16"></label>
+          <label class="field"><span>Alamat Ayah</span><input name="alamat_ayah"></label>
+          <label class="field"><span>Pekerjaan Ayah</span><input name="pekerjaan_ayah"></label>
+          <label class="field"><span>Pendidikan Ayah</span><select name="pendidikan_ayah"><option value="">Pilih pendidikan</option><option>Tidak sekolah</option><option>SD/Sederajat</option><option>SMP/Sederajat</option><option>SMA/SMK/Sederajat</option><option>D1/D2/D3</option><option>S1/D4</option><option>S2</option><option>S3</option></select></label>
+          <label class="field"><span>Penghasilan Bulanan Ayah</span><select name="penghasilan_ayah"><option value="">Pilih rentang penghasilan</option><option>Tidak berpenghasilan</option><option>Di bawah Rp1.000.000</option><option>Rp1.000.000–Rp2.000.000</option><option>Rp2.000.001–Rp3.000.000</option><option>Rp3.000.001–Rp5.000.000</option><option>Di atas Rp5.000.000</option></select></label>
+          <label class="field"><span>No. Telepon / HP Ayah</span><input name="hp_ayah" inputmode="tel"></label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <div class="section-heading"><span>03</span><div><h2>Data Ibu Kandung</h2><p>Lengkapi informasi ibu kandung</p></div></div>
+        <div class="form-grid">
+          <label class="field"><span>Nama Ibu <b>*</b></span><input name="nama_ibu" required></label>
+          <label class="field"><span>Tahun Lahir Ibu</span><input name="tahun_lahir_ibu" inputmode="numeric" maxlength="4" placeholder="YYYY"></label>
+          <label class="field"><span>NIK Ibu</span><input name="nik_ibu" inputmode="numeric" maxlength="16"></label>
+          <label class="field"><span>Alamat Ibu</span><input name="alamat_ibu"></label>
+          <label class="field"><span>Pekerjaan Ibu</span><input name="pekerjaan_ibu"></label>
+          <label class="field"><span>Pendidikan Ibu</span><select name="pendidikan_ibu"><option value="">Pilih pendidikan</option><option>Tidak sekolah</option><option>SD/Sederajat</option><option>SMP/Sederajat</option><option>SMA/SMK/Sederajat</option><option>D1/D2/D3</option><option>S1/D4</option><option>S2</option><option>S3</option></select></label>
+          <label class="field"><span>Penghasilan Bulanan Ibu</span><select name="penghasilan_ibu"><option value="">Pilih rentang penghasilan</option><option>Tidak berpenghasilan</option><option>Di bawah Rp1.000.000</option><option>Rp1.000.000–Rp2.000.000</option><option>Rp2.000.001–Rp3.000.000</option><option>Rp3.000.001–Rp5.000.000</option><option>Di atas Rp5.000.000</option></select></label>
+          <label class="field"><span>No. Telepon / HP Ibu</span><input name="hp_ibu" inputmode="tel"></label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <div class="section-heading"><span>04</span><div><h2>Data Wali</h2><p>Isi apabila santri memiliki wali selain orang tua</p></div></div>
+        <div class="form-grid">
+          <label class="field"><span>Nama Wali</span><input name="nama_wali"></label>
+          <label class="field"><span>Tahun Lahir Wali</span><input name="tahun_lahir_wali" inputmode="numeric" maxlength="4" placeholder="YYYY"></label>
+          <label class="field"><span>NIK Wali</span><input name="nik_wali" inputmode="numeric" maxlength="16"></label>
+          <label class="field"><span>Alamat Wali</span><input name="alamat_wali"></label>
+          <label class="field"><span>Pekerjaan Wali</span><input name="pekerjaan_wali"></label>
+          <label class="field"><span>Pendidikan Wali</span><select name="pendidikan_wali"><option value="">Pilih pendidikan</option><option>Tidak sekolah</option><option>SD/Sederajat</option><option>SMP/Sederajat</option><option>SMA/SMK/Sederajat</option><option>D1/D2/D3</option><option>S1/D4</option><option>S2</option><option>S3</option></select></label>
+          <label class="field"><span>Penghasilan Bulanan Wali</span><select name="penghasilan_wali"><option value="">Pilih rentang penghasilan</option><option>Tidak berpenghasilan</option><option>Di bawah Rp1.000.000</option><option>Rp1.000.000–Rp2.000.000</option><option>Rp2.000.001–Rp3.000.000</option><option>Rp3.000.001–Rp5.000.000</option><option>Di atas Rp5.000.000</option></select></label>
+          <label class="field"><span>No. Telepon / HP Wali</span><input name="hp_wali" inputmode="tel"></label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <div class="section-heading"><span>05</span><div><h2>Data Periodik</h2><p>Data fisik dan kebiasaan perjalanan ke sekolah</p></div></div>
+        <div class="form-grid">
+          <label class="field"><span>Tinggi Badan (cm)</span><input name="tinggi_badan" type="number" min="0"></label>
+          <label class="field"><span>Berat Badan (kg)</span><input name="berat_badan" type="number" min="0" step="0.1"></label>
+          <label class="field"><span>Lingkar Kepala (cm)</span><input name="lingkar_kepala" type="number" min="0"></label>
+          <label class="field"><span>Jarak Rumah ke Sekolah (km)</span><input name="jarak_sekolah" type="number" min="0" step="0.1"></label>
+          <label class="field"><span>Waktu Tempuh ke Sekolah (menit)</span><input name="waktu_tempuh" type="number" min="0"></label>
+          <label class="field"><span>Anak ke-</span><input name="anak_ke" type="number" min="1"></label>
+          <label class="field"><span>Jumlah Saudara Kandung</span><input name="jumlah_saudara" type="number" min="0"></label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <div class="section-heading"><span>06</span><div><h2>Data Prestasi</h2><p>Prestasi dapat ditambahkan lebih dari satu</p></div></div>
+        <div id="prestasiList" class="achievement-list"></div>
+        <button type="button" class="button button-secondary" id="addPrestasi">＋ Tambah Prestasi</button>
+      </section>
+
+      <section class="form-section">
+        <div class="section-heading"><span>07</span><div><h2>Pernyataan dan Pengiriman</h2><p>Periksa kembali data sebelum dikirim</p></div></div>
+        <label class="consent">
+          <input type="checkbox" name="persetujuan" id="persetujuan" required>
+          <span>Saya menyatakan bahwa data yang diisi benar dan dapat dipertanggungjawabkan oleh orang tua/wali atau siswa. <b>*</b></span>
+        </label>
+        <div class="privacy-note"><strong>Perhatian:</strong> Setelah tombol diklik, WhatsApp akan terbuka dengan rangkuman data. Anda masih perlu menekan tombol <em>Kirim</em> di WhatsApp untuk mengirim pesan kepada admin.</div>
+        <button type="submit" class="button button-whatsapp"><span class="wa-icon" aria-hidden="true">◉</span> Kirim Formulir ke WhatsApp</button>
+        <p class="form-footnote">Tujuan WhatsApp: 0888-0100-5284</p>
+      </section>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <img src="assets/logo-daarul-azmi.png" alt="" aria-hidden="true">
+    <p><strong>Pondok Pesantren Daarul Azmi</strong><br>Formulir Santri Baru</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
