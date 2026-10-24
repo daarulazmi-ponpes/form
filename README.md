@@ -7,6 +7,7 @@ Website statis HTML, CSS, dan JavaScript untuk GitHub Pages.
 - `style.css` — tampilan responsif
 - `script.js` — validasi, data prestasi dinamis, dan pengiriman WhatsApp
 - `assets/logo-daarul-azmi.png` — logo pondok
+- `assets/social-preview.png` — gambar Open Graph untuk pratinjau tautan
 
 ## Pengaturan nomor WhatsApp
 Nomor sudah diatur di `script.js` sebagai `6288801005284` (format internasional tanpa `+`, spasi, atau angka 0 di depan).
