@@ -4,7 +4,7 @@
  */
 const DATA_WA = {
     "VII (Tujuh)": {
-        "Wali Kelas": "6281234567891",
+        "Wali Kelas": "6281387810001",
         "Wali Asuh": "6281234567892",
         "Keamanan": "6281234567893"
     },
