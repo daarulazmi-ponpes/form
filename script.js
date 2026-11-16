@@ -134,7 +134,7 @@
   const submitButton = form.querySelector('button[type="submit"]');
   const validAppsScriptUrl = /^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec(?:\?.*)?$/;
 
-  if (validAppsScriptUrl.test(appsScriptEndpoint)) {
+  if (validAppsScriptUrl.test(https://script.google.com/macros/s/AKfycbx2y4g2JK5MprGe5oalkhgUIQzPL4nNgpVE2pqStnoj3uvNhK2z7uYSmqstIDmzAxe5/exec)) {
     form.action = appsScriptEndpoint;
     submitButton.disabled = false;
     submitStatus.textContent = "Formulir siap dikirim ke spreadsheet dan email panitia.";
@@ -147,12 +147,12 @@
       event.preventDefault();
       return;
     }
-    if (!validAppsScriptUrl.test(appsScriptEndpoint)) {
+    if (!validAppsScriptUrl.test(https://script.google.com/macros/s/AKfycbx2y4g2JK5MprGe5oalkhgUIQzPL4nNgpVE2pqStnoj3uvNhK2z7uYSmqstIDmzAxe5/exec)) {
       event.preventDefault();
       submitStatus.textContent = "Pengiriman gagal: URL Apps Script belum dikonfigurasi.";
       return;
     }
-    form.action = appsScriptEndpoint;
+    form.action = https://script.google.com/macros/s/AKfycbx2y4g2JK5MprGe5oalkhgUIQzPL4nNgpVE2pqStnoj3uvNhK2z7uYSmqstIDmzAxe5/exec;
     submitStatus.textContent = "Mengirim data ke spreadsheet dan email panitia...";
   });
 
