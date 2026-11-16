@@ -3,7 +3,7 @@
   const form = document.getElementById("santriForm");
   const list = document.getElementById("prestasiList");
   const addButton = document.getElementById("addPrestasi");
-  const appsScriptEndpoint = "https://script.google.com/macros/s/AKfycbx2y4g2JK5MprGe5oalkhgUIQzPL4nNgpVE2pqStnoj3uvNhK2z7uYSmqstIDmzAxe5/exec";
+  const appsScriptEndpoint = "https://script.google.com/macros/s/AKfycbyo9amrRXx958p1mYpp3s9irBDAcH3gPpJuMyaeVS_JgAoQtMWv4h-UBur32qgU29C5/exec";
 
   const field = (label, name, placeholder = "") =>
     `<label class="field"><span>${label}</span><input name="${name}" placeholder="${placeholder.replace(/"/g, "&quot;")}"></label>`;
