@@ -3,7 +3,7 @@
   const form = document.getElementById("santriForm");
   const list = document.getElementById("prestasiList");
   const addButton = document.getElementById("addPrestasi");
-  const whatsappNumber = "6288801005284";
+  const appsScriptEndpoint = "https://script.google.com/macros/s/AKfycbxjviCqQVhdY0-C8gJtVgdeokcQovzoOkQn_HrGEO9WYb_20c1no83LdjDwllshG7pB/exec";
 
   const field = (label, name, placeholder = "") =>
     `<label class="field"><span>${label}</span><input name="${name}" placeholder="${placeholder.replace(/"/g, "&quot;")}"></label>`;
@@ -130,12 +130,30 @@
     return lines.join("\n");
   }
 
+  const submitStatus = document.getElementById("submitStatus");
+  const submitButton = form.querySelector('button[type="submit"]');
+  const validAppsScriptUrl = /^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec(?:\?.*)?$/;
+
+  if (validAppsScriptUrl.test(appsScriptEndpoint)) {
+    form.action = appsScriptEndpoint;
+    submitButton.disabled = false;
+    submitStatus.textContent = "Formulir siap dikirim ke spreadsheet dan email panitia.";
+  } else {
+    submitStatus.textContent = "Pengiriman belum aktif. Panitia perlu memasang URL Apps Script yang valid.";
+  }
+
   form.addEventListener("submit", event => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
-    const message = makeMessage();
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+    if (!form.reportValidity()) {
+      event.preventDefault();
+      return;
+    }
+    if (!validAppsScriptUrl.test(appsScriptEndpoint)) {
+      event.preventDefault();
+      submitStatus.textContent = "Pengiriman gagal: URL Apps Script belum dikonfigurasi.";
+      return;
+    }
+    form.action = appsScriptEndpoint;
+    submitStatus.textContent = "Mengirim data ke spreadsheet dan email panitia...";
   });
 
   addButton.addEventListener("click", addAchievement);

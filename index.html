@@ -46,7 +46,11 @@
       </div>
     </section>
 
-    <form id="santriForm">
+    <form id="santriForm" action="" method="POST" target="_blank" rel="noopener">
+      <div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden">
+        <label for="website">Jangan isi kolom ini</label>
+        <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+      </div>
       <section class="form-section">
         <div class="section-heading"><span>01</span><div><h2>Identitas Peserta Didik</h2><p>Data pribadi dan informasi sekolah asal</p></div></div>
         <div class="form-grid">
@@ -164,9 +168,9 @@
           <input type="checkbox" name="persetujuan" id="persetujuan" required>
           <span>Saya menyatakan bahwa data yang diisi benar dan dapat dipertanggungjawabkan oleh orang tua/wali atau siswa. <b>*</b></span>
         </label>
-        <div class="privacy-note"><strong>Perhatian:</strong> Setelah tombol diklik, WhatsApp akan terbuka dengan rangkuman data. Anda masih perlu menekan tombol <em>Kirim</em> di WhatsApp untuk mengirim pesan kepada admin.</div>
-        <button type="submit" class="button button-whatsapp"><span class="wa-icon" aria-hidden="true">◉</span> Kirim Formulir ke WhatsApp</button>
-        <p class="form-footnote">Tujuan WhatsApp: 0888-0100-5284</p>
+        <div class="privacy-note"><strong>Perhatian:</strong> Data pendaftaran akan disimpan di spreadsheet PPDB dan dikirim ke email panitia. Formulir ini tidak mengunggah berkas; panitia akan mengarahkan pengiriman dokumen selanjutnya.</div>
+        <button type="submit" class="button button-whatsapp" disabled>Kirim Formulir Pendaftaran</button>
+        <p class="form-footnote" id="submitStatus" role="status" aria-live="polite">Pengiriman belum aktif. Panitia perlu memasang URL Apps Script terlebih dahulu.</p>
       </section>
     </form>
   </main>
