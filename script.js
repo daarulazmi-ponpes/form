@@ -3,7 +3,7 @@
   const form = document.getElementById("santriForm");
   const list = document.getElementById("prestasiList");
   const addButton = document.getElementById("addPrestasi");
-  const appsScriptEndpoint = "https://script.google.com/macros/s/AKfycbxjviCqQVhdY0-C8gJtVgdeokcQovzoOkQn_HrGEO9WYb_20c1no83LdjDwllshG7pB/exec";
+  const appsScriptEndpoint = "https://script.google.com/macros/s/AKfycbxhpjcX5Ai71ORSXKQzW5evb6qBhgHyNIUjIDSkRIvsMYLbq5BEKMs30OVcu0S8N236/exec";
 
   const field = (label, name, placeholder = "") =>
     `<label class="field"><span>${label}</span><input name="${name}" placeholder="${placeholder.replace(/"/g, "&quot;")}"></label>`;
@@ -147,12 +147,12 @@
       event.preventDefault();
       return;
     }
-    if (!validAppsScriptUrl.test(https://script.google.com/macros/s/AKfycbxhpjcX5Ai71ORSXKQzW5evb6qBhgHyNIUjIDSkRIvsMYLbq5BEKMs30OVcu0S8N236/exec)) {
+    if (!validAppsScriptUrl.test(appsScriptEndpoint)) {
       event.preventDefault();
       submitStatus.textContent = "Pengiriman gagal: URL Apps Script belum dikonfigurasi.";
       return;
     }
-    form.action = https://script.google.com/macros/s/AKfycbxhpjcX5Ai71ORSXKQzW5evb6qBhgHyNIUjIDSkRIvsMYLbq5BEKMs30OVcu0S8N236/exec;
+    form.action = appsScriptEndpoint;
     submitStatus.textContent = "Mengirim data ke spreadsheet dan email panitia...";
   });
 
