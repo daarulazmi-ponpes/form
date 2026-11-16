@@ -147,12 +147,12 @@
       event.preventDefault();
       return;
     }
-    if (!validAppsScriptUrl.test(appsScriptEndpoint)) {
+    if (!validAppsScriptUrl.test(https://script.google.com/macros/s/AKfycbxhpjcX5Ai71ORSXKQzW5evb6qBhgHyNIUjIDSkRIvsMYLbq5BEKMs30OVcu0S8N236/exec)) {
       event.preventDefault();
       submitStatus.textContent = "Pengiriman gagal: URL Apps Script belum dikonfigurasi.";
       return;
     }
-    form.action = appsScriptEndpoint;
+    form.action = https://script.google.com/macros/s/AKfycbxhpjcX5Ai71ORSXKQzW5evb6qBhgHyNIUjIDSkRIvsMYLbq5BEKMs30OVcu0S8N236/exec;
     submitStatus.textContent = "Mengirim data ke spreadsheet dan email panitia...";
   });
 
