@@ -102,7 +102,7 @@ function doPost(event) {
   const properties = PropertiesService.getScriptProperties();
   const spreadsheetId = properties.getProperty("SPREADSHEET_ID");
   if (!spreadsheetId) {
-    throw new Error("1bY4huDJXgmB_ZETlBnzp8EHzUGfXDWx3myqS5vy2ibSEvqdvCY6O8FCL");
+    throw new Error("Script Property SPREADSHEET_ID belum diatur.");
   }
   const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
   const sourceSheet = spreadsheet.getSheetById(SOURCE_SHEET_ID);
