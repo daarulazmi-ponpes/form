@@ -1,4 +1,15 @@
-const SOURCE_SHEET_ID = 426293471;
+/**
+ * Code.gs - Formulir Santri Baru Daarul Azmi (versi perbaikan)
+ *
+ * Perubahan dari versi sebelumnya:
+ * 1. getSheetById() diganti pencarian lewat getSheets() (method itu tidak ada di Apps Script).
+ * 2. doGet() ditambahkan supaya URL /exec bisa dites lewat browser.
+ * 3. doPost() juga bisa membaca body JSON, tidak hanya form biasa.
+ * 4. Semua error ditangkap, dicatat di Executions, dan pendaftar melihat halaman hasil, bukan halaman error Google.
+ * 5. Fungsi izinkanAkses() dan cekStruktur() untuk setup dan diagnosa dari editor.
+ */
+
+const SOURCE_SHEET_ID = 426293471;           // angka gid di URL spreadsheet (#gid=...)
 const TARGET_SHEET_NAME = "Pendaftaran Form Web";
 const EXPECTED_COLUMN_COUNT = 80;
 
@@ -81,8 +92,30 @@ const EXTRA_FIELDS = [
   ["prestasi_penyelenggaraan[]", "Penyelenggaraan Prestasi"]
 ];
 
+/* ------------------------------------------------------------------ */
+/* Endpoint                                                            */
+/* ------------------------------------------------------------------ */
+
+// Tes cepat: buka URL /exec di browser. Jika muncul "Endpoint formulir aktif", deployment sudah benar.
+function doGet() {
+  return ContentService
+    .createTextOutput("Endpoint formulir aktif.")
+    .setMimeType(ContentService.MimeType.TEXT);
+}
+
 function doPost(event) {
-  const parameters = event && event.parameters ? event.parameters : {};
+  try {
+    return handleSubmission_(event);
+  } catch (error) {
+    console.error("doPost gagal: " + error.message + "\n" + (error.stack || ""));
+    return renderResult_(false, "Terjadi kesalahan pada server. Silakan coba lagi atau hubungi panitia.");
+  }
+}
+
+function handleSubmission_(event) {
+  const parameters = readParameters_(event);
+
+  // Honeypot anti-spam
   if (firstValue_(parameters.website)) {
     return renderResult_(false, "Pengiriman tidak dapat diproses.");
   }
@@ -104,15 +137,26 @@ function doPost(event) {
   if (!spreadsheetId) {
     throw new Error("Script Property SPREADSHEET_ID belum diatur.");
   }
+
   const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
-  const sourceSheet = spreadsheet.getSheetById(SOURCE_SHEET_ID);
-  if (!sourceSheet || sourceSheet.getLastColumn() < EXPECTED_COLUMN_COUNT) {
-    throw new Error("Sheet sumber atau struktur kolom spreadsheet tidak sesuai.");
+  const sourceSheet = findSheetById_(spreadsheet, SOURCE_SHEET_ID);
+  if (!sourceSheet) {
+    throw new Error("Sheet sumber dengan gid " + SOURCE_SHEET_ID + " tidak ditemukan.");
   }
-  const sourceHeaders = sourceSheet.getRange(1, 1, 1, EXPECTED_COLUMN_COUNT).getDisplayValues()[0];
+  if (sourceSheet.getLastColumn() < EXPECTED_COLUMN_COUNT) {
+    throw new Error("Sheet sumber hanya punya " + sourceSheet.getLastColumn() +
+      " kolom terisi, diharapkan minimal " + EXPECTED_COLUMN_COUNT + ".");
+  }
+
+  const sourceHeaders = sourceSheet
+    .getRange(1, 1, 1, EXPECTED_COLUMN_COUNT)
+    .getDisplayValues()[0]
+    .map(function (h) { return String(h).trim(); });
+
   if (sourceHeaders[1] !== "Nama Santri" || sourceHeaders[15] !== "Jenis Kelamin" ||
       sourceHeaders[22] !== "Email") {
-    throw new Error("Urutan kolom sheet sumber berubah; pemetaan form dibatalkan.");
+    throw new Error("Urutan kolom sheet sumber berubah. Ditemukan: B='" + sourceHeaders[1] +
+      "', P='" + sourceHeaders[15] + "', W='" + sourceHeaders[22] + "'.");
   }
 
   const extraHeaders = EXTRA_FIELDS.map(function (field) {
@@ -167,6 +211,47 @@ function doPost(event) {
   return renderResult_(true, message);
 }
 
+/* ------------------------------------------------------------------ */
+/* Fungsi bantu                                                        */
+/* ------------------------------------------------------------------ */
+
+// Membaca data dari form biasa (urlencoded / multipart) maupun body JSON.
+function readParameters_(event) {
+  const parameters = {};
+  const fromForm = event && event.parameters ? event.parameters : {};
+  Object.keys(fromForm).forEach(function (name) {
+    parameters[name] = fromForm[name];
+  });
+
+  if (Object.keys(parameters).length === 0 && event && event.postData && event.postData.contents) {
+    const type = String(event.postData.type || "").toLowerCase();
+    const body = String(event.postData.contents || "").trim();
+    if (type.indexOf("json") !== -1 || body.charAt(0) === "{") {
+      try {
+        const json = JSON.parse(body);
+        Object.keys(json).forEach(function (name) {
+          const value = json[name];
+          parameters[name] = Array.isArray(value) ? value : [value];
+        });
+      } catch (error) {
+        console.error("Body JSON tidak valid: " + error.message);
+      }
+    }
+  }
+  return parameters;
+}
+
+// Pengganti Spreadsheet.getSheetById() yang tidak tersedia di Apps Script.
+function findSheetById_(spreadsheet, sheetId) {
+  const sheets = spreadsheet.getSheets();
+  for (let i = 0; i < sheets.length; i++) {
+    if (sheets[i].getSheetId() === sheetId) {
+      return sheets[i];
+    }
+  }
+  return null;
+}
+
 function getTargetSheet_(spreadsheet, headers) {
   let target = spreadsheet.getSheetByName(TARGET_SHEET_NAME);
   if (!target) {
@@ -185,7 +270,8 @@ function getTargetSheet_(spreadsheet, headers) {
   ensureColumns_(target, headers.length);
   const currentHeaders = target.getRange(1, 1, 1, headers.length).getDisplayValues()[0];
   if (JSON.stringify(currentHeaders) !== JSON.stringify(headers)) {
-    throw new Error("Header tab tujuan berbeda; data tidak ditulis.");
+    throw new Error("Header tab tujuan berbeda; data tidak ditulis. Hapus tab '" +
+      TARGET_SHEET_NAME + "' agar dibuat ulang, atau samakan headernya.");
   }
   return target;
 }
@@ -212,11 +298,20 @@ function firstValue_(value) {
 }
 
 function cleanValue_(value) {
-  return String(value || "").trim();
+  return String(value === null || value === undefined ? "" : value).trim();
 }
 
+// Mencegah formula injection di sel spreadsheet.
 function safeCellValue_(value) {
   return /^[\u0000-\u0020]*[=+\-@]/.test(value) ? "'" + value : value;
+}
+
+function escapeHtml_(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 function renderResult_(success, message) {
@@ -227,6 +322,40 @@ function renderResult_(success, message) {
     '<title>' + title + '</title><body style="margin:0;padding:40px 18px;background:#f5f7f2;color:#18342e;font:16px/1.6 system-ui,sans-serif">' +
     '<main style="max-width:560px;margin:10vh auto;padding:28px;border:1px solid #dce7e0;border-radius:14px;background:#fff">' +
     '<h1 style="margin:0 0 12px;color:' + color + ';font-size:24px">' + title + '</h1>' +
-    '<p>' + message + '</p><p>Anda dapat menutup tab ini dan kembali ke halaman formulir.</p></main></body></html>'
+    '<p>' + escapeHtml_(message) + '</p><p>Anda dapat menutup tab ini dan kembali ke halaman formulir.</p></main></body></html>'
   );
+}
+
+/* ------------------------------------------------------------------ */
+/* Dijalankan manual dari editor (bukan oleh form)                     */
+/* ------------------------------------------------------------------ */
+
+// Jalankan SEKALI dari editor (pilih fungsi ini lalu klik Run) untuk menyetujui izin
+// akses spreadsheet dan email. Setelah itu deploy ulang dengan "New version".
+function izinkanAkses() {
+  const id = PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID");
+  if (!id) throw new Error("Isi dulu Script Property SPREADSHEET_ID.");
+  const ss = SpreadsheetApp.openById(id);
+  console.log("Spreadsheet terbuka: " + ss.getName());
+  console.log("Sisa kuota email hari ini: " + MailApp.getRemainingDailyQuota());
+}
+
+// Jalankan dari editor untuk memeriksa struktur sheet sumber. Hasilnya muncul di log eksekusi.
+function cekStruktur() {
+  const id = PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID");
+  if (!id) throw new Error("Isi dulu Script Property SPREADSHEET_ID.");
+  const ss = SpreadsheetApp.openById(id);
+  console.log("Daftar sheet (nama = gid):");
+  ss.getSheets().forEach(function (s) {
+    console.log("- " + s.getName() + " = " + s.getSheetId() + " (" + s.getLastColumn() + " kolom)");
+  });
+  const source = findSheetById_(ss, SOURCE_SHEET_ID);
+  if (!source) {
+    console.log("TIDAK DITEMUKAN sheet dengan gid " + SOURCE_SHEET_ID + ". Ubah SOURCE_SHEET_ID sesuai daftar di atas.");
+    return;
+  }
+  const headers = source.getRange(1, 1, 1, EXPECTED_COLUMN_COUNT).getDisplayValues()[0];
+  console.log("B (indeks 1)  = '" + headers[1] + "' (harus 'Nama Santri')");
+  console.log("P (indeks 15) = '" + headers[15] + "' (harus 'Jenis Kelamin')");
+  console.log("W (indeks 22) = '" + headers[22] + "' (harus 'Email')");
 }
